@@ -7,7 +7,9 @@ package com.mycompany.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -17,29 +19,35 @@ public class ConexionMySql {
     
     private static Connection conn;
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String user = "root";
-    private static String pwd = "root";
-    private static String url = "jdbc:mysql://localhost:3306/usuario";
+    private static String url = "jdbc:mysql://localhost:3306/";
     
-    public static String ConexionMySql(){
-        String temp = "";
-        conn = null;
-        try{
-            Class.forName(driver);
-            conn = DriverManager.getConnection(url);
-            if (conn != null) {
-                temp = "exito";
-                System.out.println(1);
-                //System.out.println("Connection Successful!");
-            } else {
-                temp = "fracaso";
-                System.out.println(0);
+    public static Connection ConexionMySql() throws SQLException{
+        conn = DriverManager.getConnection (url);
+
+        try {
+            Statement Stmt = conn.createStatement ();
+
+            try {
+                try {
+                    Stmt.execute (" CREATE DATABASE pruebasDB; ");
+                    Stmt.execute (" CREATE TABLE usuario (ID int NOT NULL, Nombre varchar(50) "
+                            + " Apellido varchar(50), edad int, sexo varchar(15), telefono varchar(20), "
+                            + " PRIMARY KEY(ID)); ");
+                    conn.commit ();
+                } catch (SQLException exception) {
+                    // Okay if database exists
+                    Stmt.execute("OPEN DATABASE pruebasDB; ");
+                }
+
+            } finally {
+                Stmt.close ();
             }
-        } catch (ClassNotFoundException | SQLException e){
-            System.out.println("Error al conectar "+e);
+
+        } catch (SQLException exception) {
+            System.err.println ("SQLException : " + exception.toString ());
         }
         
-        return temp;
+        return conn;
     }
     
     public static void cerrar() throws Exception {

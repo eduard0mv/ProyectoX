@@ -1,3 +1,5 @@
 com\mycompany\prueba1\JAXRSConfiguration.class
 com\mycompany\prueba1\PruebaResource.class
+.netbeans_automatic_build
+com\mycompany\mysql\ConexionMySql.class
 com\mycompany\prueba1\resources\JavaEE8Resource.class

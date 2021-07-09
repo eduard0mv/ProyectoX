@@ -70,6 +70,7 @@ TestSupport.prototype = {
     init : function () {
         this.debug('Initializing scripts...');
         var patterns = baseURL.split('||');
+        console.log(patterns[0]);
         baseURL = patterns[0];
         // handle the Netbeans 6.5 way of retrieving applicationPath
         if (patterns.length == 3) {
